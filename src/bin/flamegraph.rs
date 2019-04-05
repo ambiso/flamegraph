@@ -15,6 +15,10 @@ struct Opt {
     )]
     output: Option<PathBuf>,
 
+    /// Sampling frequency
+    #[structopt(short = "F", long = "freq")]
+    frequency: Option<u32>,
+
     trailing_arguments: Vec<String>,
 }
 
@@ -40,5 +44,6 @@ fn main() {
     flamegraph::generate_flamegraph_by_running_command(
         workload,
         flamegraph_filename,
+        opt.frequency,
     );
 }
