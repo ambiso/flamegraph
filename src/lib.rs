@@ -38,13 +38,13 @@ mod arch {
 
     pub(crate) fn initial_command(
         workload: String,
-        freq: Option<u32>,
+        freq: Option<String>,
     ) -> Command {
         let mut command = Command::new("perf");
 
         let args = format!(
             "record -F {} --call-graph dwarf -g",
-            freq.unwrap_or(99)
+            freq.unwrap_or(99.to_string())
         );
 
         for arg in args.split_whitespace() {
@@ -79,14 +79,14 @@ mod arch {
 
     pub(crate) fn initial_command(
         workload: String,
-        freq: Option<u32>,
+        freq: Option<String>,
     ) -> Command {
         let mut command = Command::new("dtrace");
 
         let dtrace_script = format!(
             "profile-{} /pid == $target/ \
              { @[ustack(100)] = count(); }",
-            freq.unwrap_or(997)
+            freq.unwrap_or("997".to_string())
         );
 
         command.arg("-x");
@@ -147,7 +147,7 @@ pub fn generate_flamegraph_by_running_command<
 >(
     workload: String,
     flamegraph_filename: P,
-    freq: Option<u32>,
+    freq: Option<String>,
 ) {
     // Handle SIGINT with an empty handler. This has the
     // implicit effect of allowing the signal to reach the

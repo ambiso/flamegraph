@@ -17,7 +17,7 @@ struct Opt {
 
     /// Sampling frequency
     #[structopt(short = "F", long = "freq")]
-    frequency: Option<u32>,
+    frequency: Option<String>,
 
     trailing_arguments: Vec<String>,
 }
